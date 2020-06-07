@@ -21,6 +21,7 @@ pg.display.set_caption("Memory")
 
 running = True
 cards_uncovered = 0
+end_screen = True
 
 class Block(pg.sprite.Sprite):
     def __init__(self, color, width, height):
@@ -62,6 +63,7 @@ while running:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
+            end_screen = False
         if event.type == pg.MOUSEBUTTONUP:
             if cards_uncovered == 2:
                 cards_uncovered = 0
@@ -84,7 +86,10 @@ while running:
                         check_card_two = i
                         check_sprite_two = sprite_list[check_sprite_two]
                         if check_sprite_one.color == check_sprite_two.color:
-                            print("Match found")
+                            sprite_list.remove(check_sprite_one)
+                            sprite_list.remove(check_sprite_two)
+                            card_list.remove(check_card_one)
+                            card_list.remove(check_card_two)
                             check_sprite_one.kill()
                             check_card_one.kill()
                             check_sprite_two.kill()
@@ -93,6 +98,19 @@ while running:
     screen.fill(GRAY)
     matching_images.draw(screen)
     card.draw(screen)
+    pg.display.update()
+    if len(sprite_list) == 0:
+        running = False
+
+myfont = pg.font.SysFont('verdana', 25)
+
+while end_screen:
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            end_screen = False
+    screen.fill(GRAY)
+    textsurface = myfont.render("You Win!", True, (BLACK))
+    screen.blit(textsurface, (screen.get_width() // 3 + 30, 225))
     pg.display.update()
     
 pg.quit()
