@@ -57,8 +57,9 @@ for i in range(1, 17):
     if i % 4 == 0:
         x_value = 75
         y_value += 100
-
 not_hidden = []
+attempts = 0
+myfont = pg.font.SysFont('verdana', 25)
 while running:
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -67,6 +68,7 @@ while running:
         if event.type == pg.MOUSEBUTTONUP:
             if cards_uncovered == 2:
                 cards_uncovered = 0
+                attempts += 1
                 for a in not_hidden:
                     a.rect.x += 600
                 not_hidden = []
@@ -98,11 +100,11 @@ while running:
     screen.fill(GRAY)
     matching_images.draw(screen)
     card.draw(screen)
+    attempts_made = myfont.render("Attempts: " + str(attempts), True, (BLACK))
+    screen.blit(attempts_made, (0, 0))
     pg.display.update()
     if len(sprite_list) == 0:
         running = False
-
-myfont = pg.font.SysFont('verdana', 25)
 
 while end_screen:
     for event in pg.event.get():
@@ -111,6 +113,8 @@ while end_screen:
     screen.fill(GRAY)
     textsurface = myfont.render("You Win!", True, (BLACK))
     screen.blit(textsurface, (screen.get_width() // 3 + 30, 225))
+    attempts_made = myfont.render("Attempts: " + str(attempts), True, (BLACK))
+    screen.blit(attempts_made, (0, 0))
     pg.display.update()
     
 pg.quit()
