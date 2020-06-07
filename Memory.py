@@ -72,11 +72,11 @@ while running:
                 for a in not_hidden:
                     a.rect.x += 600
                 not_hidden = []
-            cards_uncovered += 1
             pos = pg.mouse.get_pos()
             x, y = pos
             for i in card_list:
-                if abs(i.rect.x - x) <= 35 and abs(i.rect.y - y) <= 35:
+                if abs(x - i.rect.x) <= 25 and abs(i.rect.y - y) <= 35:
+                    cards_uncovered += 1
                     i.rect.x -= 600
                     not_hidden.append(i)
                     if cards_uncovered == 1:
