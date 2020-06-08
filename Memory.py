@@ -75,7 +75,7 @@ while running:
             pos = pg.mouse.get_pos()
             x, y = pos
             for i in card_list:
-                if abs(x - i.rect.x) <= 25 and abs(i.rect.y - y) <= 35:
+                if i.rect.collidepoint(pos):
                     cards_uncovered += 1
                     i.rect.x -= 600
                     not_hidden.append(i)
